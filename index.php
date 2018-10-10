@@ -6,7 +6,8 @@
  $id_mhp = array();
  $contatos = array();
 
- 		echo "=======================\n";
+
+ 		echo "==========Contatos Supramail=============\n";
         $sql = new Sql();
 
         $result = $sql->select("SELECT * FROM clientes WHERE ativo='t' AND reseller_id=''");
@@ -31,11 +32,11 @@
 
        }
 
-       adicionaContatoBanco_RDStation($contatos_supramail);
+       adicionaContatoBanco_RDStation($contatos_supramail, "supramail");
 
        
        
-        echo "\n\n=======================\n";
+        echo "\n\n======Contatos MHP =================\n";
 
 
         $sql = new Sql();
@@ -59,9 +60,12 @@
 
        }
      
-       adicionaContatoBanco_RDStation($contatos_mhp);
+       adicionaContatoBanco_RDStation($contatos_mhp, "mhp");
 
-	   function adicionaContatoBanco_RDStation($arrayContatos = array()){
+	   function adicionaContatoBanco_RDStation($arrayContatos = array(), $tipoCliente){
+
+	   		   $token = "SEUTOKEN";
+
 
 		       foreach ($arrayContatos as $key => $value)
 		       {
@@ -71,6 +75,22 @@
 		       			if(!Consultas::verificaEmailNoBanco("SELECT * FROM contatos_clientes_rdstation WHERE email = :EMAIL", $valor)){    			
 
 		       				Consultas::inserir("INSERT INTO contatos_clientes_rdstation (nome, email, id_cliente, id_contato) VALUES(:NOME, :EMAIL, :ID_CLIENTE, :ID_CONTATO)", $valor);
+		       				
+		       				if($tipoCliente == "supramail"){
+		       					echo "\n Supramail \n ";
+
+		       					$form_data_array = array('email'=> $valor["email"], 'nome' => $valor["nome"]);
+
+		       					addLeadConversionToRdstationCrm($token, "cliente-supramail", $form_data_array);
+		       				}
+
+		       				if($tipoCliente == "mhp"){
+		       					echo "\n MHP \n ";
+
+		       					$form_data_array = array('email'=> $valor["email"], 'nome' => $valor["nome"]);
+		       					print_r($form_data_array);
+		       					addLeadConversionToRdstationCrm($token, "MHPs", $form_data_array);
+		       				}
 		       		    }
 		       		    else{
 
