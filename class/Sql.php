@@ -2,12 +2,12 @@
 
 class Sql extends PDO{
 	private $conn;
-	private $user="wilton";
-	private $pass="123456";
+	private $user="usuarioBanco";
+	private $pass="senha";
 
 	
 	public function __construct(){
-		$this->conn = new PDO('pgsql:host=localhost;dbname=wilton',$this->user,$this->pass);
+		$this->conn = new PDO('pgsql:host=host;dbname=nomeBanco',$this->user,$this->pass);
 		$this->conn->exec("set names utf8");
 	}
 
