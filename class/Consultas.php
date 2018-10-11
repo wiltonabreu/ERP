@@ -3,15 +3,21 @@ class Consultas{
 
   public static function search($query,$id){
         $sql = new Sql();
-        $sq = $sql->select($query, array(
+        $sq = $sql->rowquery($query, array(
          ':ID'=>$id
         ));
         return $sq;
   }
 
+  public static function select($query){
+        $sql = new Sql();
+        $sq = $sql->rowquery($query);
+        return $sq;
+  }
+
   public static function verificaEmailNoBanco($query,$valor){
         $sql = new Sql();
-        $sq = $sql->select($query, array(
+        $sq = $sql->rowquery($query, array(
          ':EMAIL'=>$valor["email"]
         ));
         return $sq;
@@ -22,7 +28,7 @@ class Consultas{
           
           $sql = new Sql();
 
-          $stmt = $sql->select($query, array(
+          $stmt = $sql->rowquery($query, array(
            ':NOME'=>$valor["nome"],
            ":EMAIL"=>$valor["email"],
            ":ID_CLIENTE" =>$valor["id_cliente"],

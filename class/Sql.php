@@ -2,12 +2,12 @@
 
 class Sql extends PDO{
 	private $conn;
-	private $user="USUARIOBANCO";
+	private $user="USER";
 	private $pass="SENHA";
 
 	
 	public function __construct(){
-		$this->conn = new PDO('pgsql:host=SEUHOST;dbname=NOMEBANCO',$this->user,$this->pass);
+		$this->conn = new PDO('pgsql:host=HOST;dbname=DBNAME',$this->user,$this->pass);
 		$this->conn->exec("set names utf8");
 	}
 
@@ -29,7 +29,7 @@ class Sql extends PDO{
 		return $stmt;		
 	}
 
-	public function select($rawQuery,$params = array()):array
+	public function rowquery($rawQuery,$params = array()):array
 	{
 		$stmt = $this->query($rawQuery, $params);
 

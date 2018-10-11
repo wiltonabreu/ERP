@@ -8,4 +8,5 @@ spl_autoload_register(function($class_name){
 	}
 });
 require_once("crm_rdstation.php");
+require_once("adicionaContatoBanco_RDStation.php");
 ?>
